@@ -38,9 +38,9 @@ class IntrospectController < ApplicationController
     end        
 
     render json: meta.merge( { 'valid' => is_valid,
-                       'exp' => current_token.expires_at,  #:TODO: in timestamp
-                       'iad' => current_token.created_at,  #:TODO: in tmestamp(could be updated_at )
-                       'scope' =>  current_token.scopes.map{|scope|scope.name}.join(' '),   #:TODO:
+                       'exp' => current_token.expires_at.to_i,
+                       'iad' => current_token.created_at.to_i, 
+                       'scope' =>  current_token.scopes.map{|scope|scope.name}.join(' '), 
                        'client_id' => current_token.client.identifier,  #:TODO:
                        'aud' =>  [ current_token.client.identifier, ], #:TODO:
                       })
