@@ -1,0 +1,15 @@
+<article class="authorization">
+  <h3>
+    <%= authorization.client.name %>
+  </h3>
+  <details>
+    <summary><%= authorization.id%></summary>
+    <ul>
+      <li><%= authorization.created_at %>
+        <div><%= authorization.authorization_scopes.map{|s| s.scope.name } %></div>
+     </li>
+    </ul>
+    <footer>
+    </footer>
+  </details>
+</article>

@@ -3,11 +3,17 @@
   <%= render @clients %>
 </section>
 
+<section>
+  <h2><%= 'dashboard.authorizations.title'.t %></h2>
+  <%= render @authorizations %>
+</section>
+
 <nav>
   <p>
     <%= link_to 'clients.new.title'.t, new_client_path %>
   </p>
 </nav>
+
 
 <aside class="help">
   <h3><%= 'help.title'.t %></h3>
