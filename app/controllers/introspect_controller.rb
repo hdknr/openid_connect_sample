@@ -18,6 +18,7 @@ class IntrospectController < ApplicationController
 
   def show
     #:TODO: access token MUST be valid because this controller is running.
+
     is_valid=true
     sub =""
     meta = {}
@@ -28,6 +29,7 @@ class IntrospectController < ApplicationController
                 current_token.account_id, current_token.client_id ])
         
         decoded_id_token= IdToken.decode( params[:token] )
+        is_valid = id_token.nonce == decoded_id_token.nonce
         
         #:TODO: check if ID Token parameters are all valid.
         #:TODO: check if ID Token has been timed out.
@@ -35,6 +37,11 @@ class IntrospectController < ApplicationController
         meta['sub'] =  decoded_id_token.sub #:TODO:
     else
         #:TODO: access token  validation
+        ppid = current_token.account
+                .pairwise_pseudonymous_identifiers
+                    .find_by_sector_identifier(
+                        current_token.client.sector_identifier)
+        meta['sub'] = ppid.identifier
     end        
 
     render json: meta.merge( { 'valid' => is_valid,
