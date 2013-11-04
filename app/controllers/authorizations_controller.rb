@@ -13,6 +13,11 @@ class AuthorizationsController < ApplicationController
     call_authorization_endpoint :allow_approval, params[:approve]
   end
 
+  def destroy 
+    Authorization.destroy params[:id]
+    redirect_to dashboard_url
+  end
+
   private
 
   def call_authorization_endpoint(allow_approval = false, approved = false)
@@ -44,4 +49,5 @@ class AuthorizationsController < ApplicationController
       render :new
     end
   end
+
 end

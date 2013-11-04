@@ -7,6 +7,9 @@
     <ul>
       <li><%= authorization.created_at %>
         <div><%= authorization.authorization_scopes.map{|s| s.scope.name } %></div>
+        <%= form_tag authorization, :id=> authorization.id , :method => :delete do%>
+           <input type="submit" name="submit" value="revoke"/>
+        <% end %>
      </li>
     </ul>
     <footer>

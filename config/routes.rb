@@ -3,7 +3,7 @@ ConnectOp::Application.routes.draw do
   resource :dashboard, only: :show
 
   resources :clients, except: :show
-  resources :authorizations, only: [:new, :create]
+  resources :authorizations ,only: [:new, :create, :destroy ]
 
   namespace :connect do
     resource :fake,     only: :create
