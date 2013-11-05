@@ -44,7 +44,7 @@ class IntrospectController < ApplicationController
         meta['sub'] = ppid.identifier
     end        
 
-    render json: meta.merge( { 'valid' => is_valid,
+    render json: meta.merge( { 'active' => is_valid,
                        'exp' => current_token.expires_at.to_i,
                        'iad' => current_token.created_at.to_i, 
                        'scope' =>  current_token.scopes.map{|scope|scope.name}.join(' '), 
