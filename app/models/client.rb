@@ -9,10 +9,10 @@ class Client < ActiveRecord::Base
 
   before_validation :setup, on: :create
 
-  validates :account,      presence: {unless: :dynamic?}
-  validates :identifier,   presence: true, uniqueness: true
-  validates :secret,       presence: true
-  validates :name,         presence: true
+  validates :account,    presence: {unless: :dynamic?}
+  validates :identifier, presence: true, uniqueness: true
+  validates :secret,     presence: true
+  validates :name,       presence: true
 
   scope :dynamic, where(dynamic: true)
   scope :valid, lambda {
@@ -50,8 +50,15 @@ class Client < ActiveRecord::Base
     end
   end
 
+  # for views/clients/_form.html.erb
+  attr_accessor :redirect_uri
+  def redirect_uri=(redirect_uri)
+    self.redirect_uris = Array(redirect_uri)
+  end
+
   def as_json(options = {})
-    hash = raw_registered_json.merge(
+    hash = raw_registered_json || {}
+    hash.merge!(
       client_id: identifier,
       expires_at: expires_at.to_i,
       registration_access_token: 'fake'
@@ -66,6 +73,6 @@ class Client < ActiveRecord::Base
     self.identifier = SecureRandom.hex(16)
     self.secret     = SecureRandom.hex(32)
     self.expires_at = 1.hour.from_now if dynamic?
-    self.name       ||= 'Unknown'
+    self.name     ||= 'Unknown'
   end
 end
